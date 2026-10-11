@@ -1,0 +1,289 @@
+from abc import ABC, abstractmethod
+
+
+# 1. Abstract products
+
+class Chair(ABC):
+# Abstract product interface for chair
+
+    @abstractmethod
+    def sit_on(self):
+        pass
+
+    @abstractmethod
+    def get_description(self):
+        pass
+
+
+class Table(ABC):
+# Abstract product interface for table
+
+    @abstractmethod
+    def place_items(self):
+        pass
+
+    @abstractmethod
+    def get_description(self):
+        pass
+
+
+class Sofa(ABC):
+# Abstract product interface for sofa
+
+    @abstractmethod
+    def relax_on(self):
+        pass
+
+    @abstractmethod
+    def get_description(self):
+        pass
+
+
+# 2. Concrete products
+
+class ModernChair(Chair):
+    def __init__(self):
+        self.style = "Modern"
+        self.material = "Steel and Leather"
+        self.price = 299.99
+
+    def sit_on(self):
+        print(f"Sitting on a {self.style} chair made of {self.material}")
+
+    def get_description(self):
+        return f"{self.style} chair made of {self.material} - ${self.price}"
+
+
+class ModernTable(Table):
+    def __init__(self):
+        self.style = "Modern"
+        self.material = "Glass and Chrome"
+        self.price = 599.99
+
+    def place_items(self):
+        print(f"Placing items on a {self.style} table made of {self.material}")
+
+    def get_description(self):
+        return f"{self.style} table made of {self.material} - ${self.price}"
+
+
+class ModernSofa(Sofa):
+    def __init__(self):
+        self.style = "Modern"
+        self.material = "Microfiber"
+        self.price = 899.99
+
+    def relax_on(self):
+        print(f"Relaxing on a {self.style} sofa made of {self.material}")
+
+    def get_description(self):
+        return f"{self.style} sofa made of {self.material} - ${self.price}"
+
+
+class VictorianChair(Chair):
+    def __init__(self):
+        self.style = "Victorian"
+        self.material = "Mahogany"
+        self.price = 499.99
+
+    def sit_on(self):
+        print(f"Sitting on a {self.style} chair made of {self.material}")
+
+    def get_description(self):
+        return f"{self.style} chair made of {self.material} - ${self.price}"
+
+
+class VictorianTable(Table):
+    def __init__(self):
+        self.style = "Victorian"
+        self.material = "Oak"
+        self.price = 799.99
+
+    def place_items(self):
+        print(f"Placing items on a {self.style} table made of {self.material}")
+
+    def get_description(self):
+        return f"{self.style} table made of {self.material} - ${self.price}"
+
+
+class VictorianSofa(Sofa):
+    def __init__(self):
+        self.style = "Victorian"
+        self.material = "Velvet"
+        self.price = 1299.99
+
+    def relax_on(self):
+        print(f"Relaxing on a {self.style} sofa made of {self.material}")
+
+    def get_description(self):
+        return f"{self.style} sofa made of {self.material} - ${self.price}"
+
+
+class ArtDecoChair(Chair):
+    def __init__(self):
+        self.style = "Art Deco"
+        self.material = "Walnut"
+        self.price = 399.99
+
+    def sit_on(self):
+        print(f"Sitting on a {self.style} chair made of {self.material}")
+
+    def get_description(self):
+        return f"{self.style} chair made of {self.material} - ${self.price}"
+
+
+class ArtDecoTable(Table):
+    def __init__(self):
+        self.style = "Art Deco"
+        self.material = "Marble and Brass"
+        self.price = 999.99
+
+    def place_items(self):
+        print(f"Placing items on a {self.style} table made of {self.material}")
+
+    def get_description(self):
+        return f"{self.style} table made of {self.material} - ${self.price}"
+
+
+class ArtDecoSofa(Sofa):
+    def __init__(self):
+        self.style = "Art Deco"
+        self.material = "Silk"
+        self.price = 1599.99
+
+    def relax_on(self):
+        print(f"Relaxing on a {self.style} sofa made of {self.material}")
+
+    def get_description(self):
+        return f"{self.style} sofa made of {self.material} - ${self.price}"
+
+
+# 3. Abstract factory
+
+class FurnitureFactory(ABC):
+# Abstract factory for creating furniture
+
+    @abstractmethod
+    def create_chair(self):
+        pass
+
+    @abstractmethod
+    def create_table(self):
+        pass
+
+    @abstractmethod
+    def create_sofa(self):
+        pass
+
+
+# 4. Concrete factories
+
+class ModernFurnitureFactory(FurnitureFactory):
+
+    def create_chair(self):
+        return ModernChair()
+
+    def create_table(self):
+        return ModernTable()
+
+    def create_sofa(self):
+        return ModernSofa()
+
+
+class VictorianFurnitureFactory(FurnitureFactory):
+
+    def create_chair(self):
+        return VictorianChair()
+
+    def create_table(self):
+        return VictorianTable()
+
+    def create_sofa(self):
+        return VictorianSofa()
+
+
+class ArtDecoFurnitureFactory(FurnitureFactory):
+
+    def create_chair(self):
+        return ArtDecoChair()
+
+    def create_table(self):
+        return ArtDecoTable()
+
+    def create_sofa(self):
+        return ArtDecoSofa()
+
+
+# 5. Refactored the client
+
+class FurnitureShop:
+
+    def __init__(self, factory):
+        self.factory = factory
+        self.chairs = []
+        self.tables = []
+        self.sofas = []
+
+    def create_furniture_set(self):
+        self.chairs.append(self.factory.create_chair())
+        self.tables.append(self.factory.create_table())
+        self.sofas.append(self.factory.create_sofa())
+
+    def display_inventory(self):
+        print("******* Furniture Shop Inventory *******")
+
+        print("Chairs:")
+        for chair in self.chairs:
+            print(chair.get_description())
+
+        print("Tables:")
+        for table in self.tables:
+            print(table.get_description())
+
+        print("Sofas:")
+        for sofa in self.sofas:
+            print(sofa.get_description())
+
+    def demonstrate_furniture(self):
+        print("******* Furniture Demonstration *******")
+
+        if self.chairs:
+            self.chairs[0].sit_on()
+
+        if self.tables:
+            self.tables[0].place_items()
+
+        if self.sofas:
+            self.sofas[0].relax_on()
+
+
+# Client inputs furniture style for Modern, Victorian, or Art Deco
+
+def main():
+
+    style = input(
+        "Choose a furniture style: modern, victorian, or artdeco: "
+    ).lower()
+
+    if style == "modern":
+        factory = ModernFurnitureFactory()
+
+    elif style == "victorian":
+        factory = VictorianFurnitureFactory()
+
+    elif style == "artdeco":
+        factory = ArtDecoFurnitureFactory()
+
+    else:
+        print("Unknown furniture style.")
+        return
+
+    shop = FurnitureShop(factory)
+
+    shop.create_furniture_set()
+    shop.display_inventory()
+    shop.demonstrate_furniture()
+
+
+if __name__ == "__main__":
+    main()
